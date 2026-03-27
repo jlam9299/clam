@@ -1,0 +1,5 @@
+---
+ipaserver_domain: "{{ domain_name }}"
+ipaserver_realm: "{{ domain_name | upper}}"
+ipaserver_setup_dns: true
+ipaserver_auto_forwarders: true

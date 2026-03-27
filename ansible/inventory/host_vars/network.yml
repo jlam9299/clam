@@ -1,0 +1,12 @@
+---
+network_provider: nm
+network_state:
+  interfaces:
+    - name: eth0
+      type: ethernet
+      state: up
+      ip:
+        dns: "{{ dns_ipv4 }}"
+        address: 
+          - "{{ ansible_host }}/28"
+        gateway4: 192.168.30.1

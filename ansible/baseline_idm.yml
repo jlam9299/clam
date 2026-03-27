@@ -1,0 +1,11 @@
+---
+- name: Playbook to configure IPA server
+  hosts: ipaserver
+  become: true
+  vars_files:
+    - idm_secrets.yml
+  roles:
+    - role: fedora.linux_system_roles.network
+
+    - role: freeipa.ansible_freeipa.ipaserver
+      state: present
