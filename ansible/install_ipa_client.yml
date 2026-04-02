@@ -1,0 +1,16 @@
+---
+- name: Install IPA client
+  hosts: ipaclients
+  become: true
+  vars_files:
+    - idm_secrets.yml
+  pre_tasks:
+    - name: Add IPA server to /etc/hosts file
+      ansible.builtin.lineinfile:
+        line: "{{ hostvars['idm-master-01.clam.lan'].ansible_host }} {{ hostvars['idm-master-01.clam.lan'].inventory_hostname }}"
+        regex: "^{{ hostvars['idm-master-01.clam.lan'].ansible_host }}"
+        state: present
+        path: /etc/hosts
+        
+  roles:
+    - role: freeipa.ansible_freeipa.ipaclient

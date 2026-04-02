@@ -1,0 +1,22 @@
+idm-master-01.clam.lan ansible_host=192.168.30.2
+infra-node-01.clam.lan ansible_host=192.168.30.10
+
+[virtual]
+idm-master-01.clam.lan
+
+[nodes]
+infra-node-01.clam.lan
+
+[ipaservers]
+idm-master-01.clam.lan
+
+[ipaclients]
+infra-node-01.clam.lan
+
+[ipaclients:vars]
+ipaclient_servers=idm-master-01.clam.lan
+ipaclient_domain=clam.lan
+ipaclient_configure_dns_resolvers=yes
+
+ipaclient_mkhomedir=yes
+ipaclient_subid=yes
