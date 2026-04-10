@@ -2,4 +2,6 @@
 ipaserver_domain: "{{ domain_name }}"
 ipaserver_realm: "{{ domain_name | upper}}"
 ipaserver_setup_dns: true
+ipaserver_setup_kra: true
 ipaserver_auto_forwarders: true
+ipaserver_allow_zone_overlap: true

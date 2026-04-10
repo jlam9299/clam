@@ -1,0 +1,7 @@
+ipaclient_servers: idm.clamie.au
+ipaclient_domain: clamie.au
+ipaclient_configure_dns_resolvers: yes
+
+ipaclient_force_join: true
+ipaclient_subid: true
+ipaclient_mkhomedir: true

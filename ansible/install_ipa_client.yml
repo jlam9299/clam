@@ -5,12 +5,18 @@
   vars_files:
     - idm_secrets.yml
   pre_tasks:
-    - name: Add IPA server to /etc/hosts file
+    - name: Set FQDN
+      ansible.builtin.hostname:
+        name: "{{ inventory_hostname }}"
+        use: systemd 
+    
+    - name: Allow local network to access NTP server.
       ansible.builtin.lineinfile:
-        line: "{{ hostvars['idm-master-01.clam.lan'].ansible_host }} {{ hostvars['idm-master-01.clam.lan'].inventory_hostname }}"
-        regex: "^{{ hostvars['idm-master-01.clam.lan'].ansible_host }}"
-        state: present
         path: /etc/hosts
+        line: "{{ hostvars['idm.clamie.au'].ansible_host }} {{ hostvars['idm.clamie.au'].inventory_hostname }}"
+        regexp: "^{{ hostvars['idm.clamie.au'].ansible_host }}"
+        state: present
         
   roles:
     - role: freeipa.ansible_freeipa.ipaclient
+

@@ -1,11 +1,36 @@
 ---
 - name: Playbook to configure IPA server
-  hosts: ipaserver
+  hosts: ipaservers
   become: true
   vars_files:
     - idm_secrets.yml
+  pre_tasks:
+    - name: Set FQDN
+      ansible.builtin.hostname:
+        name: "{{ inventory_hostname }}"
+        use: systemd 
+    
   roles:
-    - role: fedora.linux_system_roles.network
+    - role: linux-system-roles.network
 
     - role: freeipa.ansible_freeipa.ipaserver
       state: present
+  post_tasks:
+    - name: Allow local network to access NTP server.
+      ansible.builtin.lineinfile:
+        path: /etc/chrony.conf
+        line: "allow 192.168.0.0/16"
+        insertafter: "^#\\s*[a|A]llow"
+        state: present
+
+    - name: Restart chronyd
+      ansible.builtin.systemd:
+        name: chronyd
+        state: restarted
+  
+    - name: Open firewall for NTP.
+      ansible.posix.firewalld:
+        service: ntp
+        permanent: true
+        immediate: true
+        state: enabled
