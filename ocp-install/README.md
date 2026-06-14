@@ -80,10 +80,10 @@ butane ./ocp-install/99-master-custom.bu -o ./ocp-install/openshift/99-master-cu
 
 ```bash
 # Copy to a fresh working directory
-cp -r ocp-install /tmp/ocp-install
+cp -r ocp-install ~/ocp-install
 
 # Generate the ISO
-openshift-install agent create image --dir /tmp/ocp-install
+openshift-install agent create image --dir ~/ocp-install
 ```
 
 ### Add kernel arguments to ISO for live boot display (nomodeset)
@@ -93,13 +93,13 @@ installed system. To also apply it during the live ISO boot (needed for FlexIO H
 HP EliteDesk G6), patch the ISO after generation:
 
 ```bash
-coreos-installer iso kargs modify /tmp/ocp-install/agent.x86_64.iso --append nomodeset
+coreos-installer iso kargs modify ~/ocp-install/agent.x86_64.iso --append nomodeset
 ```
 
 If `coreos-installer` is not installed locally:
 
 ```bash
-podman run --rm -v /tmp/ocp-install:/data:z \
+podman run --rm -v ~/ocp-install:/data:z \
   quay.io/coreos/coreos-installer:release \
   iso kargs modify /data/agent.x86_64.iso --append nomodeset
 ```
@@ -113,22 +113,22 @@ podman run --rm -v /tmp/ocp-install:/data:z \
 2. Monitor bootstrap completion:
 
 ```bash
-openshift-install agent wait-for bootstrap-complete --dir /tmp/ocp-install --log-level=info
+openshift-install agent wait-for bootstrap-complete --dir ~/ocp-install --log-level=info
 ```
 
 3. Monitor full install completion:
 
 ```bash
-openshift-install agent wait-for install-complete --dir /tmp/ocp-install --log-level=info
+openshift-install agent wait-for install-complete --dir ~/ocp-install --log-level=info
 ```
 
 The install typically takes 45-60 minutes. The kubeconfig is written to
-`/tmp/ocp-install/auth/kubeconfig` on completion.
+`~/ocp-install/auth/kubeconfig` on completion.
 
 ## Post-install access
 
 ```bash
-export KUBECONFIG=/tmp/ocp-install/auth/kubeconfig
+export KUBECONFIG=~/ocp-install/auth/kubeconfig
 oc get nodes
 oc get clusterversion
 ```

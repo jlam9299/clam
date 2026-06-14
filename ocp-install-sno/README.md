@@ -28,16 +28,16 @@ Update [agent-config.yaml](agent-config.yaml) with the correct MAC address and r
 Create a copy of the working configuration directory (the installer consumes and removes them):
 
 ```bash
-cp -r ocp-install-sno /tmp/ocp-install-sno
+cp -r ocp-install-sno ~/ocp-install-sno
 ```
 
 ### 3. Generate and Modify Cluster Manifest
 
 ```bash
-openshift-install-fips agent create cluster-manifests --dir /tmp/ocp-install-sno
+openshift-install-fips agent create cluster-manifests --dir ~/ocp-install-sno
 ```
 
-Modify `/tmp/ocp-install-sno/cluster-manifests/agent-cluster-install.yaml`
+Modify `~/ocp-install-sno/cluster-manifests/agent-cluster-install.yaml`
 
 ```yaml
 spec:
@@ -52,7 +52,7 @@ spec:
 ### 4. Generate ISO and Boot Nodes
 
 ```bash
-openshift-install-fips agent create image --dir /tmp/ocp-install-sno
+openshift-install-fips agent create image --dir ~/ocp-install-sno
 ```
 
 Write the ISO to a USB drive or mount it via your platform's virtual media (IPMI/iDRAC/iLO):
@@ -62,11 +62,11 @@ Boot the target node from the ISO. The agent will configure networking, apply FI
 ### Monitor Installation
 
 ```bash
-openshift-install-fips agent wait-for bootstrap-complete --dir /tmp/ocp-install-sno --log-level=info
-openshift-install-fips agent wait-for install-complete   --dir /tmp/ocp-install-sno --log-level=info
+openshift-install-fips agent wait-for bootstrap-complete --dir ~/ocp-install-sno --log-level=info
+openshift-install-fips agent wait-for install-complete   --dir ~/ocp-install-sno --log-level=info
 ```
 
-The `kubeconfig` is written to `/tmp/ocp-install-sno/auth/kubeconfig` on completion.
+The `kubeconfig` is written to `~/ocp-install-sno/auth/kubeconfig` on completion.
 
 ---
 
